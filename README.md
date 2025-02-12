@@ -9,7 +9,8 @@ This repository is organized for the paper submitted and it is under constructio
 To run the data plane (P4 code), controller, and classifier ...
 
 ## (1) Connect to the P4Pi
-    # Ensure the P4Pi's Ethernet interface is connected to a network with DHCP enabled for internet access!
+**Note:** Ensure the P4Pi's Ethernet interface is connected to a network with DHCP enabled for internet access!
+
     ssh pi@192.168.4.1  # default P4Pi IP address is 192.168.4.1 and Username is `pi' 
     pass: ****          # Password    
     sudo su             # change to root user

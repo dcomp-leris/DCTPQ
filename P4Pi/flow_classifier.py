@@ -1,3 +1,9 @@
+'''
+Author: Alireza Shirmarz
+Location: Leris Lab
+Date: 20241230
+'''
+
 import cProfile
 import logging
 from scapy.all import sniff, sendp, UDP, Ether, IP
@@ -16,11 +22,10 @@ from influxdb_client_3 import InfluxDBClient3, Point
 
 
 ''' General Variables '''
-#config_file = '/home/cls/config.yaml'
-config_file = 'config.yaml'
+config_file = '/home/pi/DCTPQ/P4Pi/config.yaml'
 # Model path configuration
 model_path = 'dt_model.joblib'
-#model_path = '/home/cls/rf_model.joblib'
+
 
 # Network configuration
 SRC_INTERFACE = 'eth1'  # Interface listen to TG
@@ -29,31 +34,14 @@ SRC_INTERFACE = 'eth1'  # Interface listen to TG
 # Store the flows to avoid sending of the consecutive packets of the flows
 #lookup_table = {} # lookup table to cache the  packets of the flow
 
-# logging and counting the packets
-#logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s') # added to track the packets
+
 
 # Initialize counters
 packets_received = 0
 packets_forwarded = 0
 
 
-# Packet and time counter
-#cached_pkt_start = 0
-#cached_pkt_end = 0
 
-#cached_time_start =0
-#cached_time_end =0
-
-
-#cached_pkts = 0
-#cached_time = 0
-
-# load the Classifier
-# classifier = PacketClassifier(model_path)  #'/home/alireza/my_code/Classifier/dt_model.joblib')  # model_path
-
-# Global variables for monitoring
-#packets_forwarded = 0
-#bytes_forwarded = 0
 start_time = time.time()
 #q_cache = Queue()
 
@@ -109,7 +97,6 @@ def add_or_update_entry(key, value, allow_update=True):
             return False'''
 
 # Convert IP address to bits
-
 def ip_to_bits(ip):
     try:
         # Try to parse the IP address using ipaddress module
@@ -182,16 +169,10 @@ def forward_packet(packet):
     if (IP in packet or IPv6 in packet) and UDP in packet: #if IP in packet and UDP in packet:
 
         pkt_type = "IPv6" if IPv6 in packet else "IPv4"
-        # print('Received pkt', pkt_type)
-        #bytes_forwarded += len(packet)
-        #flowkey_local = hashlib.sha256(str((packet[IP].src, packet[IP].dst, packet[UDP].dport)).encode().hex().encode()).hexdigest()
-        #flowkey_reverse =  hashlib.sha256(str((packet[IP].dst, packet[IP].src, packet[UDP].dport)).encode().hex().encode()).hexdigest()
 
         # logging
         packets_received += 1
-        #print(f'Received packet {packets_received}  from {packet[IP].src} to {packet[IP].dst} on iface {SRC_INTERFACE}', time.time())
-        #print(f'pkt_type:receiving,pkt_no:{packets_received},from:{packet[IP].src},to: {packet[IP].dst},iface:{SRC_INTERFACE},',"Time:", time.time())
-        #logging.debug(f"Received packet from {packet[IP].src} to {packet[IP].dst}")
+
 
         # Classification the packet
 
@@ -200,32 +181,20 @@ def forward_packet(packet):
             #q_cache.put([flowkey_local,packet])
             return
         else:
-            # flow_class = "AR" if result[1] in ('AR_UL', 'AR_DL' ,'AR') else "CG" if result[1] in ('CG_UL', 'CG_DL','CG') else "Other"
+            
             flow_class = "CG" if result[1] in ('CG_UL', 'CG_DL','CG') else "Other"
             if pkt_type=="IPv4":
                 dst_ip = str(packet[IP].dst)
                 src_ip = str(packet[IP].src)
                 binary_ip_dst = ip_to_bits(str(packet[IP].dst))
                 ip_crc16_dst = bits_to_crc16(binary_ip_dst)
-                # ip_crc16 = crc16_from_hex(hex_ip)                                   # ip in crc16
-                # port_crc16 = crc16_from_hex(format(packet[UDP].dport, 'x'))         # port in crc16
                 binary_port_dst = port_to_bits(packet[UDP].dport)
                 ip_port_concat = binary_ip_dst + binary_port_dst
 
-                #port_crc16_dst = bits_to_crc16(binary_port_dst)
-                # port_crc16 = bits_to_crc16(binary_port)  packet[IPv6]
-
-                #flow_id_dst = ip_crc16_dst + port_crc16_dst   # flow_id crc using ip & port
                 flow_id_dst = bits_to_crc16(ip_port_concat)
                 unique_flow_flag = add_or_update_entry(flow_id_dst, flow_class, False)
-                #print("tag",unique_flow_flag)
-
-                ### Reverse Flow ID
-                # src_ip = str(packet[IP].src)
                 binary_ip_src = ip_to_bits(str(packet[IP].src))
                 ip_crc16_src = bits_to_crc16(binary_ip_src)
-                # ip_crc16 = crc16_from_hex(hex_ip)                                   # ip in crc16
-                # port_crc16 = crc16_from_hex(format(packet[UDP].dport, 'x'))         # port in crc16
                 binary_port_src = port_to_bits(packet[UDP].sport)
 
                 port_crc16_src = bits_to_crc16(binary_port_src)
@@ -243,43 +212,31 @@ def forward_packet(packet):
                 dst_ip = str(packet[IPv6].dst)
                 src_ip = str(packet[IPv6].src)
                 binary_ip_dst = ip_to_bits(str(packet[IPv6].dst))
-                #ip_crc16_dst = bits_to_crc16(binary_ip_dst)
-                # ip_crc16 = crc16_from_hex(hex_ip)                                   # ip in crc16                # port_crc16 = crc16_from_hex(format(packet[UDP].dport, 'x'))         # port in cr>                binary_port = port_to_bits(packet[UDP].dport)
                 binary_port_dst = port_to_bits(packet[UDP].dport)
-                #port_crc16_dst = bits_to_crc16(binary_port_dst)
-                # port_crc16 = bits_to_crc16(binary_port)
 
 
-                #flow_id_dst = ip_crc16_dst + port_crc16_dst   # flow_id crc using ip & port
                 ip_port_concat = binary_ip_dst + binary_port_dst
                 flow_id_dst = bits_to_crc16(ip_port_concat)
                 unique_flow_flag = add_or_update_entry(flow_id_dst, flow_class, False)
-                #print("tag",unique_flow_flag)
 
 
 
                 binary_ip_src = ip_to_bits(str(packet[IPv6].src))
                 ip_crc16_src = bits_to_crc16(binary_ip_src)
-                # ip_crc16 = crc16_from_hex(hex_ip)                                   # ip in crc16                # port_crc16 = crc16_from_hex(format(packet[UDP].dport, 'x'))         # port in cr>                binary_port = port_to_bits(packet[UDP].dport)
                 binary_port_src = port_to_bits(packet[UDP].sport)
                 port_crc16_src = bits_to_crc16(binary_port_src)
-                # port_crc16 = bits_to_crc16(binary_port)
 
                 flow_id_src = ip_crc16_src + port_crc16_src   # flow_id crc using ip & port
                 unique_flow_flag = add_or_update_entry(flow_id_src, flow_class, False)
-                #print("tag",unique_flow_flag)
+ 
 
 
 
 
 
-
-            if flow_class == "CG" and unique_flow_flag:  # or flow_class == "AR":
-         # High Priority--> CG flow if it was CG & AR
-                #controller.table_add('flow_queue', 'assign_q', [str(flow_id)], ['2'])
+            if flow_class == "CG" and unique_flow_flag: 
                 controller.register_write('flow_queue', flow_id_dst, 2)
-                #controller.register_write('flow_queue', flow_id_src, 2)
-
+                
                 print(f'DST IP {dst_ip} DST Port {packet[UDP].dport} in Queue 2')
                 print(f'SRC IP {src_ip} SRC Port {packet[UDP].sport} in Queue 2')
 
@@ -313,101 +270,19 @@ def forward_packet(packet):
 
 
             elif flow_class == "Other" and unique_flow_flag:
-                # controller.table_add('flow_queue', 'assign_q', [str(flow_id)], ['1'])     # Medium Priority --> UDP packets if it was other
+                
                 controller.register_write('flow_queue', flow_id_dst, 1)
-                #controller.register_write('flow_queue', flow_id_src, 1)
-                # print(f'IP {dst_ip}, Port {packet[UDP].dport} in Queue 1')
+                
+                
                 print(f'DST IP {dst_ip} DST Port {packet[UDP].dport} in Queue 1')
                 print(f'SRC IP {src_ip} SRC Port {packet[UDP].sport} in Queue 1')
             elif unique_flow_flag:
                 controller.register_write('flow_queue', flow_id_dst, 0)
-                #controller.register_write('flow_queue', flow_id_src, 0)
-                #controller.table_add('flow_queue', 'assign_q', [str(flow_id)], ['0'])     # No Priority --> TCP or other
+                
+                
                 print(f'DST IP {dst_ip} DST Port {packet[UDP].dport} in Queue 0')
                 print(f'SRC IP {src_ip} SRC Port {packet[UDP].sport} in Queue 0')
-
-
-
-        '''if flowkey_local in lookup_table.keys():
-            iface, src_mac, dst_mac = container_table[lookup_table[flowkey_local]]
-            forwarded_packet = Ether(src=src_mac, dst=dst_mac) / packet[IP]
-            sendp(forwarded_packet, iface=iface, verbose=False)
-            packets_forwarded += 1
-            print('************************************************')
-            print(f'pkt_type:forwarding[lookup],pkt_no:{packets_forwarded},from:{forwarded_packet[IP].src},to: {forwarded_packet[IP].dst},iface:{iface},',"Time:", time.time())
-            print('************************************************')
-
-        else:
-            # Classification the packet
-            result = classifier.classify_packet(packet)
-            if not result or len(result)==2 or len(result)==1 or result[1] is None:
-                q_cache.put([flowkey_local,packet])
-                return
-            flow_class = "AR" if result[1] in ('AR_UL', 'AR_DL' ,'AR') else "CG" if result[1] in ('CG_UL', 'CG_DL','CG') else "Other"
-            lookup_table[flowkey_local] = flow_class # result[0]] = flow_class
-            print(f"====================")    # Received pkts {packets_received}")
-            print('Forwarding starts:',(packet[IP].src,packet[IP].dst,packet[UDP].dport),'==>',flow_class)
-            print(f'Features [{result[2]}]')
-            socket.socket(socket.AF_INET, socket.SOCK_DGRAM).sendto(str([(packet[IP].src,packet[IP].dst,packet[UDP].sport,packet[UDP].dport),result[2],result[1]]).encode(), ('192.168.140.2', 12348))
-            print("====================")
-
-
-            # Limit lookup_table to 10 entries
-            if len(lookup_table) >= entry_num:
-            # This is a simple way to remove an entry; you may want to refine this logic
-                lookup_table.pop(next(iter(lookup_table)))  # Remove an arbitrary (the first) entry
-
-
-            #if result[0] not in lookup_table:
-                #lookup_table[result[0]] = flow_class
-
-            iface, src_mac, dst_mac = container_table[flow_class] #lookup_table[result[0]]]
-            forwarded_packet = Ether(src=src_mac, dst=dst_mac) / packet[IP]
-
-
-
-            #cached_pkt_start = 0
-            #cached_pkt_end = 0
-            #cached_time_start =0
-            #cached_time_end =0
-            cached_pkts = 0
-            cached_time = 0
-
-            cached_time_start = time.time()
-            while not q_cache.empty():
-                cache_packet = None
-                #cached_pkt_start = packets_forwarded # To calculate cached packets to classification
-                cached_pkts+=1
-                #cached_time_start = time.time()
-                cache_packet= q_cache.get()
-                #print('cache packet--?',cache_packet)
-                #hasher.digest()
-                #if result[0] not in lookup_table:
-                #lookup_table[result[0]] = flow_class
-                if  (flowkey_local in cache_packet[0]) or (flowkey_reverse in cache_packet[0]):
-                    my_pkt = Ether(src=src_mac, dst=dst_mac) / cache_packet[1][IP]
-                    sendp(my_pkt, iface=iface, verbose=False)
-                    packets_forwarded += 1
-                    print(f'pkt_type:forwarding[cached],pkt_no:{packets_forwarded},from:{forwarded_packet[IP].src},to: {forwarded_packet[IP].dst},iface:{iface},',"Time:", time.time())
-                else:
-                    continue
-            cached_time = time.time() - cached_time_start
-            sendp(forwarded_packet, iface=iface, verbose=False)
-            # logging
-            #print('Forwarded', time.time())
-            packets_forwarded += 1
-            #cached_pkt_end = packets_forwarded
-            #cached_pkts = int(cached_pkt_end) - int(cached_pkt_start)
-            #cached_time_end = time.time()
-            #cached_time = cached_time_end - cached_time_start
-            #print(f'Forwarded packet {packets_forwarded}  from {forwarded_packet[IP].src} to {forwarded_packet[IP].dst} on iface {iface}', time.time())
-            print(f'pkt_type:forwarding[classified],pkt_no:{packets_forwarded},from:{forwarded_packet[IP].src},to: {forwarded_packet[IP].dst},iface:{iface},',"Time:", time.time())  #'c_time: ',cached_time, 'c_pkts: ', cached_pkts)
-'''
-
-
-
-        # Classification the packet
-
+      
 
 
 def main():
@@ -432,7 +307,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    #profiler = cProfile.Profile()
-    #profiler.run('main()')
-    #profiler.print_stats()

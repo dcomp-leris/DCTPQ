@@ -34,17 +34,28 @@ These instruction is running on your PC!
 
 **Note:** To compile and run, keep it memorized that you copied files "/home/pi/DCTPQ"! if you change the addree be aware of changing the address! 
 
-## (2) Compile the P4 code!
-    p4c-bm2-ss --target bmv2 --arch v1model -o /home/pi/DCTPQ/P4Pi/forward.json /home/pi/DCTPQ/P4Pi/forward.p4   # Compile the code
+## (2) Compile & Run the P4 code!
+    p4c-bm2-ss --target bmv2 --arch v1model -o /home/pi/DCTPQ/P4Pi/DCTPQ.json /home/pi/DCTPQ/P4Pi/DCTPQ.p4   # Compile the code
     # Note: Be sure the forward.json was generated in the address you set!
 
     # create the folder in bmv2 to run P4 
     mkdir  bmv2/examples/DCTPQ        
     cp /home/pi/DCTPQ/P4Pi/DCTPQ.p4 ./bmv2/examples/DCTPQ      # P4 file name must be "DCTPQ.p4"
     cp /home/pi/DCTPQ/P4Pi/DCTPQ.json ./bmv2/examples/DCTPQ    # json file name must be "DCTPQ.json"
-    
+
+    # Restart the simple switch 
+    systemctl restart bmv2.service
+    systemctl status bmv2.service 
+
+**Output:**
+
+![image](https://github.com/user-attachments/assets/424b39e1-2576-4ee6-b646-38c17f518067)
+
+## (3) Run the controller + Classfier 
+
 
     
     
+
 
 

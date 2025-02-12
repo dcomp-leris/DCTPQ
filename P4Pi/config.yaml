@@ -23,9 +23,9 @@ cls_config:
   model:
     selection: 'rf'                    # selection can be 'dt' or 'rf'
     dt:
-      path: 'dt_model.joblib'
+      path: '/home/pi/DCTPQ/P4Pi/dt_model.joblib'
     rf:
-      path: 'rf_model.joblib'
+      path: '/home/pi/DCTPQ/P4Pi/rf_model.joblib'
 
 
   lookup_table:
@@ -35,5 +35,5 @@ cls_config:
   ot:                               # Online trainer (OT) Server information for receiver module on CLS server
     ip: '0.0.0.0'                   # Receiver
     port: 5001                      # Listen to this port [OT server sends the ML model file to this port!]
-    ml_file: 'dt_model.joblib' # The locaaion which the received file replaced!
+    ml_file: '/home/pi/DCTPQ/P4Pi/dt_model.joblib' # The locaaion which the received file replaced!
 

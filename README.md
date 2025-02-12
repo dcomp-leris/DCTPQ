@@ -24,9 +24,11 @@ To run the data plane (P4 code), controller, and classifier ...
 **Note:** It is recommended to be disconnected and connect again with the local IP assigned by DHCP (e.g., 200.18.102.14/25 using wireless or 200.18.102.32/25 using wired interface) and after
 ssh connection and entering the password, change the user to root and go to the home directory as we did! (run the previous instructions except './setup_eth_wlan_bridge.sh')
 
-**Note:** Copy the DCTPQ to the P4Pi from your computer!
-    git clone 
-    scp  ./DCTPQ pi@200.18.102.14:/root/         # change the IP address (200.18.102.14) to your local network address! 
+**Note:** Copy the DCTPQ to the P4Pi from your computer! 
+These instruction is running on your PC!
+
+    git clone https://github.com/dcomp-leris/DCTPQ.git
+    scp -r ./DCTPQ pi@200.18.102.14:/root/       # Copy the DCTPQ folder to P4Pi / Note: change the IP address (200.18.102.14) to your local network address! 
     pass: ****                                   # Enter your computer password
 
 ## (2) 

@@ -44,8 +44,8 @@ These instruction is running on your PC!
     cp /home/pi/DCTPQ/P4Pi/DCTPQ.json ./bmv2/examples/DCTPQ    # json file name must be "DCTPQ.json"
 
     # Restart the simple switch 
-    systemctl restart bmv2.service
-    systemctl status bmv2.service 
+    systemctl restart bmv2.service                             # Run the current P4
+    systemctl status bmv2.service                              # Check the running config 
 
 **Output:**
 
@@ -53,9 +53,15 @@ These instruction is running on your PC!
 
 ## (3) Run the controller + Classfier 
 
+    # Classifier
+    sudo python3 /home/pi/DCTPQ/P4Pi/flow_classifier.py
+
+**Output:**
+![image](https://github.com/user-attachments/assets/45b61843-afbf-4e35-b28a-2db24482e6cc)
 
     
-    
 
+**Note:** The classifier is listenning the ports in parallel with dataplane forwarding and the match/action table is filled by the flow_classifier.py running in the controller!
 
+DCTPQ is running and serving as your Access Point (AP)!
 

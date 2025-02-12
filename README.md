@@ -28,8 +28,23 @@ ssh connection and entering the password, change the user to root and go to the 
 These instruction is running on your PC!
 
     git clone https://github.com/dcomp-leris/DCTPQ.git
-    scp -r ./DCTPQ pi@200.18.102.14:/root/       # Copy the DCTPQ folder to P4Pi / Note: change the IP address (200.18.102.14) to your local network address! 
+    scp -r ./DCTPQ pi@200.18.102.14:/home/pi/    # Copy the DCTPQ folder to P4Pi 
+    # Note: change the IP address (200.18.102.14) to your local network address!
     pass: ****                                   # Enter your computer password
 
-## (2) 
+**Note:** To compile and run, keep it memorized that you copied files "/home/pi/DCTPQ"! if you change the addree be aware of changing the address! 
+
+## (2) Compile the P4 code!
+    p4c-bm2-ss --target bmv2 --arch v1model -o /home/pi/DCTPQ/P4Pi/forward.json /home/pi/DCTPQ/P4Pi/forward.p4   # Compile the code
+    # Note: Be sure the forward.json was generated in the address you set!
+
+    # create the folder in bmv2 to run P4 
+    mkdir  bmv2/examples/DCTPQ        
+    cp /home/pi/DCTPQ/P4Pi/DCTPQ.p4 ./bmv2/examples/DCTPQ      # P4 file name must be "DCTPQ.p4"
+    cp /home/pi/DCTPQ/P4Pi/DCTPQ.json ./bmv2/examples/DCTPQ    # json file name must be "DCTPQ.json"
+    
+
+    
+    
+
 

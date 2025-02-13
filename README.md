@@ -70,8 +70,14 @@ These instruction is running on your PC!
 ## (4) Using INT
 **Note:** Run on your computer!
 
-    # INT sender
-    
+    # First -> INT sender
+    python3 send3.py
+
+    # Second - INT Receiver
+    python3 receive_Showing.py     # To show
+    python3 receive_logging.py     # To store the log
+
+
 
 **DCTPQ is running and serving as your Access Point (AP)!**
 

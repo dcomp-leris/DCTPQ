@@ -8,6 +8,10 @@ This repository is organized for the paper submitted and it is under constructio
 
 To run the data plane (P4 code), controller, and classifier ...
 
+## Pre-rquirements
+[P4Pi]!(https://github.com/p4lang/p4pi)
+[Python3]!(https://www.python.org/downloads/release/python-3123/) 
+
 ## (1) Setup P4Pi 
 **Note:** Ensure the P4Pi's Ethernet interface is connected to a network with DHCP enabled for internet access!
 
@@ -63,5 +67,7 @@ These instruction is running on your PC!
 
 **Note:** The classifier is listenning the ports in parallel with dataplane forwarding and the match/action table is filled by the flow_classifier.py running in the controller!
 
-DCTPQ is running and serving as your Access Point (AP)!
+
+
+**DCTPQ is running and serving as your Access Point (AP)!**
 

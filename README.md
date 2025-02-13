@@ -5,12 +5,17 @@ This repository is organized for the paper submitted and it is under constructio
 
 ![image](https://github.com/user-attachments/assets/6c81c53a-d220-4ad2-96b0-6c5303e119af)
 
+## Repository Contents
+![image](https://github.com/user-attachments/assets/355715e7-7a9f-438c-97b9-32cb9232c45e)
+
+## Requirements
+- Install P4Pi [https://github.com/p4lang/p4pi)]
+- Python3 [https://www.python.org/downloads/release/python-3123/]
 
 To run the data plane (P4 code), controller, and classifier ...
 
-## Pre-rquirements
-- Install P4Pi [https://github.com/p4lang/p4pi)]
-- Python3 [https://www.python.org/downloads/release/python-3123/]
+
+
 
 ## (1) Setup P4Pi 
 **Note:** Ensure the P4Pi's Ethernet interface is connected to a network with DHCP enabled for internet access!
@@ -31,10 +36,13 @@ ssh connection and entering the password, change the user to root and go to the 
 **Note:** Copy the DCTPQ to the P4Pi from your computer! 
 These instruction is running on your PC!
 
+    # Run on your computer 
     git clone https://github.com/dcomp-leris/DCTPQ.git
     scp -r ./DCTPQ pi@200.18.102.14:/home/pi/    # Copy the DCTPQ folder to P4Pi 
-    # Note: change the IP address (200.18.102.14) to your local network address!
     pass: ****                                   # Enter your computer password
+    
+    # Attention ==> change the IP address (200.18.102.14) to your local network address!
+
 
 **Note:** To compile and run, keep it memorized that you copied files "/home/pi/DCTPQ"! if you change the addree be aware of changing the address! 
 

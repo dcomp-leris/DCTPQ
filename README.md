@@ -73,7 +73,7 @@ These instruction is running on your PC!
     # First -> INT sender
     python3 send3.py
 
-    # Second - INT Receiver
+    # Second -> INT Receiver
     python3 receive_Showing.py     # To show
     python3 receive_logging.py     # To store the log
 

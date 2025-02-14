@@ -150,6 +150,9 @@ Save and close the file.
     python3 receive_logging.py     # To store the log
 
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-**DCTPQ is running and serving as your Access Point (AP)!**
+**DCTPQ is running as your Access Point (AP)!**
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

@@ -1,7 +1,9 @@
 # DCTPQ: Dynamic Cloud Gaming Traffic Prioritization Using Machine Learning and Multi-Queueing for QoE Enhancement
 
 [![Conference](https://img.shields.io/badge/submitted-SBRC2025-blue)](https://sbrc.sbc.org.br/2025/pt_br/)
-[![Accepted](https://img.shields.io/badge/submitted-2025/03/14-yellow)](https://sbrc.sbc.org.br/2025/pt_br/)
+[![Accepted](https://img.shields.io/badge/Presentation-2025/03/14-yellow)]([https://sbrc.sbc.org.br/2025/en/sessoes-tecnicas-trilha-principal/])
+[![Paper File](https://img.shields.io/badge/PDF-2025/03/14-green)]([https://github.com/dcomp-leris/DCTPQ/blob/main/SBRC_Paper_2025.pdf])
+
 
 ### **Note:**
 This paper has been submitted to the SBRC 2025 Conference and is under review!

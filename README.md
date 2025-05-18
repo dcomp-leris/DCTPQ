@@ -2,7 +2,8 @@
 
 [![Conference](https://img.shields.io/badge/submitted-SBRC2025-blue)](https://sbrc.sbc.org.br/2025/pt_br/)
 [![Presentation](https://img.shields.io/badge/Conference-2025/03/14-yellow)](https://sbrc.sbc.org.br/2025/en/sessoes-tecnicas-trilha-principal/)
-[![Paper File](https://img.shields.io/badge/PDF-2025/03/14-green)](https://github.com/dcomp-leris/DCTPQ/blob/main/SBRC_Paper_2025.pdf)
+[![Paper](https://img.shields.io/badge/Paper-2025/03/14-green)](https://github.com/dcomp-leris/DCTPQ/blob/main/SBRC_Paper_2025.pdf)
+[![Presentation](https://img.shields.io/badge/Presentation-2025/05/20-red)](https://docs.google.com/presentation/d/1Uf3-jqGcS5jzvVHAQUK10RCGRnfMvfmotK1VZRjJLzE/edit?usp=sharing)
 
 
 ### **Note:**

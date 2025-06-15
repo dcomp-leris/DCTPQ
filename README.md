@@ -163,20 +163,25 @@ Save and close the file.
 **DCTPQ is running as your Access Point (AP)!**
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-**Note:** If you use this paper, Please cite the paper as 
+**Note:** If you use this paper, please cite it as 
 
-@inproceedings{sbrc,
- author = {Alireza Shirmarz and Carlos Henrique de França Marques and Fábio Luciano Verdi and Roberto Silva Netto and Suneet Kumar Singh and Christian Esteve Rothenberg},
- title = { DCTPQ: Dynamic Cloud Gaming Traffic Prioritization Using Machine Learning and Multi-Queueing for QoE Enhancement},
- booktitle = {Anais do XLIII Simpósio Brasileiro de Redes de Computadores e Sistemas Distribuídos},
- location = {Natal/RN},
- year = {2025},
- keywords = {},
- issn = {2177-9384},
- pages = {476--489},
- publisher = {SBC},
- address = {Porto Alegre, RS, Brasil},
- doi = {10.5753/sbrc.2025.6266},
- url = {https://sol.sbc.org.br/index.php/sbrc/article/view/35152}
-}
+
+    
+        @inproceedings{sbrc,
+         author = {Alireza Shirmarz and Carlos Henrique de França Marques and Fábio Luciano Verdi and Roberto Silva Netto and Suneet Kumar Singh and Christian Esteve Rothenberg},
+         title = { DCTPQ: Dynamic Cloud Gaming Traffic Prioritization Using Machine Learning and Multi-Queueing for QoE Enhancement},
+         booktitle = {Anais do XLIII Simpósio Brasileiro de Redes de Computadores e Sistemas Distribuídos},
+         location = {Natal/RN},
+         year = {2025},
+         keywords = {},
+         issn = {2177-9384},
+         pages = {476--489},
+         publisher = {SBC},
+        address = {Porto Alegre, RS, Brasil},
+        doi = {10.5753/sbrc.2025.6266},
+         url = {https://sol.sbc.org.br/index.php/sbrc/article/view/35152}
+        }
+
+
+ 
  
